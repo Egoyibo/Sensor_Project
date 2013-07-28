@@ -1,0 +1,24 @@
+h1 {
+	text-align: center;
+	font-family: Courier, monospace;
+	display: block;
+	margin: auto;
+	margin-top: 150px;
+}
+
+
+#button {
+	background-color: #F5FFFA;
+	height: 50px;
+	width: 100px;
+	margin: auto;
+	text-align: center;
+	margin-top: 100px;
+}
+
+button {
+	color: #3D9140;
+	font-size: 18px;
+	font-family: Courier, monospace;
+	margin-top: 20px;
+}
