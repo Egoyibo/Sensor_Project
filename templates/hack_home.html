@@ -1,0 +1,37 @@
+{% extends "hack_base.html" %}
+
+{% block title %} {{user.first_name}} {{user.last_name}} {% endblock %}
+
+{% block header %} Welcome to UpNEPA! {{user.first_name}} {{user.last_name}}! {% endblock %}
+
+{% block content %}
+	<div id="user_info">
+		<h3> {{user.first_name}} {{user.last_name}} </h3>
+		<ul>
+			<li>{{user.email}}</li>
+			<li>{{user.phone}}</li>
+			<li id="address">{{user.address}}</li>
+		</ul>
+	</div>
+
+	<hr>
+
+	<div>
+		<table>
+			<thead> Recent UpNEPA! Reports </thead>
+			{% for event in events %}
+				{% if event.event == 1 %}
+				<tr>
+					<td>UpNEPA!!!</td>
+					<td>{{event.timestamp}}</td>
+				</tr>
+				{% else %}
+				<tr>
+					<td>DownNEPA!!!</td>
+					<td>{{event.timestamp}}</td>
+				</tr>
+				{% endif %}
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

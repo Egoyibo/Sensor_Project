@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="/static/stylesheet_2.css" media="screen">
+		<title>{% block title %}{% endblock %}UpNEPA!</title>
+	</head>
+
+	<body>
+		<div id="header">
+			{% block header %} {% endblock %}
+		</div>
+
+		<hr>
+
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+				<li>{{message}}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
+		
+		{% block content %} {% endblock %}
+
+		<hr>
+
+		<div id="footer">
+			<div class="nav">Home</div>
+			<div class="nav">About</div>
+			<div class="nav">Demo</div>
+			<div class="nav">Buy</div>
+			<div class="nav">Testimonials</div>
+		</div>
+	</body>
+</html>

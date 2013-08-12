@@ -1,0 +1,40 @@
+{% extends "hack_base.html" %}
+
+{% block title %} Welcome to {% endblock %}
+
+{% block header %} <!-- This contains login information and logo-->
+	<div>
+		<form action="" method="post" name="login">
+			{{form.hidden_tag()}}
+			<p>
+				<p>
+					{{form.email}}
+
+					{% for error in form.errors.email %}
+						<span>[{{error}}]</span>
+					{% endfor %}
+				</p> 
+
+				<p>
+					{{form.password}}
+
+					{% for error in form.errors.password %}
+						<span>[{{error}}]</span>
+					{% endfor %}
+				</p> 
+				
+				<input type="submit" value="Sign In">
+			</p>
+
+			<p> New User? Register Here! </p>
+		</form>
+	</div>
+{% endblock %}
+
+{% block content %}
+	<h1> Welcome to UpNEPA! </h1>
+	<h3> Helping Nigerians Save! </h3>
+	<div>
+		<img id="map" src="http://bit.ly/198NNjV">
+	</div>
+{% endblock %}

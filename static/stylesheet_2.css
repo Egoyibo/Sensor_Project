@@ -1,0 +1,14 @@
+.nav{
+	height: 50px;
+	width: 100px;
+	display: inline-block;
+}
+
+span{
+	color: #BE2625;
+}
+
+#map{
+	height: 500;
+	width: 800;
+}

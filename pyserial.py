@@ -1,3 +1,5 @@
+#This script does not import my webapp so it's not dependent on it (kinda)
+
 import serial
 import requests
 from datetime import datetime
@@ -20,15 +22,16 @@ def read_from_serial(ser):
 	# print ser.inWaiting()
 	while (ser.inWaiting() == 0 or ser.inWaiting() > 0):
 		# print "I'm here"
-			event = ser.readline().rstrip()
-			# print event
-			# print (event=="1")
-		#Dictionary that contains information from arduino
-			params = {"id" : 1, 
-					"event" : int(event)}
-					# "timestamp" : datetime.now()}
-			req = requests.post("http://localhost:5000/add_event", data = params)
-			print req
+		print "Please push button"
+		event = ser.readline().rstrip()
+		# print event
+		# print (event=="1")
+	#Dictionary that contains information from arduino
+		params = {"id" : 1, 
+				"event" : int(event)}
+				# "timestamp" : datetime.now()}
+		req = requests.post("http://localhost:5000/add_event", data = params)
+		print req
 
 def main():
 	ser = open_serial_port()
