@@ -1,11 +1,60 @@
-{% extends hack_base.html %}
+{% extends "hack_base.html" %}
 
 {% block title %} Register | {% endblock %}
 
 {% block header %} 
-	<h2> Get started with UpNEPA! </h2>
+	<h2> Get started with<a href="/"> UpNEPA! </a></h2>
 {% endblock %}
 
 {% block content %}
-	<form action="">
+	<form action="" method="post" name="register">
+		{{form.hidden_tag()}}
+		<h3> Personal Information </h3>
+		<p>
+			First Name <br>
+			{{form.first_name}}
+		</p>
+
+		<p>
+			Last Name <br>
+			{{form.last_name}}
+		</p>
+
+		<p>
+			Phone Number (+12345678900)<br>
+			{{form.phone}}
+		</p>
+
+		<p>
+			City <br>
+			{{form.city}}
+		</p>
+
+		<p>
+			State <br>
+			{{form.state}}
+		</p>
+
+		<hr>
+		
+		<h3> Set up Login </h3>
+		<p>
+			Email <br>
+			{{form.email}} 
+		</p>
+
+		<p>
+			Password <br>
+			{{form.password}}
+		</p>
+
+		<hr>
+
+		<h3> Specific Arduino Information</h3>
+		<p> Arduino Secret Key <br>
+			{{form.arduino_key}}
+		</p>
+
+		<input type="submit" value="Sign Me Up!">
 	</form>
+{% endblock %}

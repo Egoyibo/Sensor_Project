@@ -6,7 +6,7 @@
 	<div>
 		<form action="" method="post" name="login">
 			{{form.hidden_tag()}}
-			<p>
+			<div>
 				<p>
 					{{form.email}}
 
@@ -22,11 +22,13 @@
 						<span>[{{error}}]</span>
 					{% endfor %}
 				</p> 
-				
-				<input type="submit" value="Sign In">
-			</p>
 
-			<p> New User? Register Here! </p>
+				<p>
+					<input type="submit" value="Sign In">
+				</p>
+			</div>
+
+			<a href="/register">New User? Register Here!</a>
 		</form>
 	</div>
 {% endblock %}

@@ -2,7 +2,10 @@
 
 {% block title %} {{user.first_name}} {{user.last_name}} {% endblock %}
 
-{% block header %} Welcome to UpNEPA! {{user.first_name}} {{user.last_name}}! {% endblock %}
+{% block header %} 
+<h2>Welcome to UpNEPA! {{user.first_name}} {{user.last_name}}!</h2>
+<a href="/logout">Logout</a>
+{% endblock %}
 
 {% block content %}
 	<div id="user_info">
@@ -10,11 +13,9 @@
 		<ul>
 			<li>{{user.email}}</li>
 			<li>{{user.phone}}</li>
-			<li id="address">{{user.address}}</li>
+			<li id="address">{{user.city}}, {{user.state}}, Nigeria</li>
 		</ul>
 	</div>
-
-	<hr>
 
 	<div>
 		<table>
@@ -23,12 +24,15 @@
 				{% if event.event == 1 %}
 				<tr>
 					<td>UpNEPA!!!</td>
-					<td>{{event.timestamp}}</td>
+					<td class="timeago" title="{{event.timestamp.isoformat()}}">{{event.timestamp.isoformat()}}</td>
+					<!-- <td class="timeago" title="2008-07-17T09:24:17Z">July 17, 2008</td> -->
+					<!--class="timeago" title="{{event.timestamp.isoformat}}-->
 				</tr>
 				{% else %}
 				<tr>
 					<td>DownNEPA!!!</td>
-					<td>{{event.timestamp}}</td>
+					<td class="timeago" title="{{event.timestamp.isoformat()}}">{{event.timestamp.isoformat()}}</td>
+					<!-- <td class="timeago" title="2008-07-17T09:24:17Z">July 17, 2008</td> -->
 				</tr>
 				{% endif %}
 			{% endfor %}
