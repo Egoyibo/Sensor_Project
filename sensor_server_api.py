@@ -137,12 +137,12 @@ def logout():
 @app.route("/add_event", methods=["POST"])
 def add_event():
 	#Validate arduino
-	client_arduino_key = model.session.query(model.Arduino).filter(model.Arduino.key==request.form["key"]).first().key
-	if client_arduino_key:
+	arduino = model.session.query(model.Arduino).filter(model.Arduino.key==request.form["key"]).first()
+	if arduino_key:
 
 		event = model.Event()
 
-		event.arduino_key = client_arduino_key
+		event.arduino_key = arduino_key.key
 		event.event = request.form["event"]
 		event.timestamp = datetime.now()
 
@@ -157,13 +157,16 @@ def add_event():
 
 		#Code to send text message using Twilio API
 		if event.event == 1:
-			account_sid = "AC43217aee93d8775227e4a486a6e6e48f"
-			auth_token = "352c071bc205bda5b8cfdc852c72f008"
+			account_sid = "XXXXXX"
+			auth_token = "XXXXXX"
+
+			#get users phone number:
+			user_phone = mode.session.query(model.User).filter(model.User.id==arduino.user_id).first().phone 
 
 			client = TwilioRestClient(account_sid, auth_token)
 
 			sms = client.sms.messages.create(body = "Hey Jessica! There is power!!",
-											to = "+19176916498",
+											to = user_phone,
 											from_ = "+12167778433")
 		return "I work!!! <EVENT>"
 	else:
