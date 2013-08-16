@@ -1,4 +1,4 @@
-.nav{
+.footer_nav{
 	height: 50px;
 	width: 100px;
 	display: inline-block;
@@ -8,6 +8,10 @@
 	height: 50px;
 	width: 100px;
 	display: inline-block;
+}
+
+.my_tab_contents{
+	margin: 0 auto;
 }
 
 span{

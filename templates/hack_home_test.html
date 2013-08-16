@@ -1,0 +1,99 @@
+{% extends "hack_base.html" %}
+
+{% block title %} {{user.first_name}} {{user.last_name}} {% endblock %}
+
+{% block header %} 
+<h2>Welcome to UpNEPA! {{user.first_name}} {{user.last_name}}!</h2>
+<a href="/logout">Logout</a>
+{% endblock %}
+
+{% block content %}
+	<div id="user_info">
+		<h3> {{user.first_name}} {{user.last_name}} </h3>
+		<ul>
+			<li>{{user.email}}</li>
+			<li>{{user.phone}}</li>
+			<li id="address">{{user.city}}, {{user.state}}, Nigeria</li>
+		</ul>
+	</div>
+
+	<div id="content">
+		<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+			<li class="active"><a href="#recent" data-toggle="tab">Recent UpNEPA! Reports</a></li>
+			<li><a href="#readings" data-toggle="tab">Power Usage Chart</a></li>
+		</ul>
+		<div id="my-tab-content" class="tab-content">
+			<div class="tab-pane active" id="recent">
+				<table class="my_tab_contents">
+					{% for event in events %}
+						{% if event.event == 1 %}
+						<tr>
+							<td>UpNEPA!!!</td>
+							<td class="timeago" title="{{event.timestamp.isoformat()}}">{{event.timestamp.isoformat()}}</td>
+							<!-- <td class="timeago" title="2008-07-17T09:24:17Z">July 17, 2008</td> -->
+							<!--class="timeago" title="{{event.timestamp.isoformat}}-->
+						</tr>
+						{% else %}
+						<tr>
+							<td>DownNEPA!!!</td>
+							<td class="timeago" title="{{event.timestamp.isoformat()}}">{{event.timestamp.isoformat()}}</td>
+							<!-- <td class="timeago" title="2008-07-17T09:24:17Z">July 17, 2008</td> -->
+						</tr>
+						{% endif %}
+					{% endfor %}
+				</table>
+			</div>
+			<div class="tab-pane" id="readings">
+				<div class="my_tab_contents" id="chart"></div>
+			</div>
+		</div>
+	</div>
+<style type="text/css">
+	#chart_container {
+		position: relative;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	#chart {
+		position: relative;
+		left: 40px;
+	}
+	#y-axis {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 40px;
+	}
+</style>
+
+<div id="chart_container">
+	<div id="y-axis"></div>
+	<div id="chart"></div>
+</div>
+
+<script>
+	var data = {{data | safe}};
+
+	var graph = new Rickshaw.Graph({
+	        element: document.querySelector("#chart"),
+	        width: 540,
+	        height: 240,
+	        max: 3000,
+	        series: [{color: 'steelblue',
+	                data: data}] });
+	var x_axis = new Rickshaw.Graph.Axis.Time( {graph: graph});
+	var y_axis = new Rickshaw.Graph.Axis.Y({
+		graph: graph,
+		orientation: "left",
+		tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+		element: document.getElementById("y_axis"),
+		min: 120,
+		max: 5000
+	});
+	graph.render();
+</script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+    });
+</script>
+{% endblock %}

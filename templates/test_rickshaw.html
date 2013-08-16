@@ -1,0 +1,33 @@
+<!doctype>
+<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+<link type="text/css" rel="stylesheet" href="rickshaw.min.css">
+
+<!--<script src="mbostock-d3-41bfffe/d3.min.js"></script>
+<script src="mbostock-d3-41bfffe/src/layout/layout.js"></script>
+<script src="rickshaw.min.js"></script> -->
+
+<script src="http://code.shutterstock.com/rickshaw/vendor/d3.min.js"></script>
+<script src="http://code.shutterstock.com/rickshaw/vendor/d3.layout.min.js"></script>
+<script src="http://code.shutterstock.com/rickshaw/rickshaw.min.js"></script> 
+
+<body>
+<div id="chart"></div>
+
+<script>
+
+var data = [ { x: 0, y: 40 }, { x: 1, y: 49 }, { x: 2, y: 17 }, { x: 3, y: 42 } ];
+
+var graph = new Rickshaw.Graph( {
+        element: document.querySelector("#chart"),
+        width: 580,
+        height: 250,
+        series: [ {
+                color: 'steelblue',
+                data: data
+        } ]
+} );
+
+graph.render();
+
+</script>
+</body>

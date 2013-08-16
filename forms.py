@@ -9,16 +9,18 @@ class LoginForm(Form):
 	password = PasswordField('password', validators=[Required()])
 	remember_me = BooleanField('remember_me', default = False)
 
-class TelephoneForm(Form):
-    country_code = IntegerField('country_code', validators =[Required()])
-    area_code    = IntegerField('area_code', validators =[Required()])
-    number       = StringField('number')
+# class TelephoneForm(Form):
+#     country_code = IntegerField('country_code', validators =[Required()])
+#     area_code    = IntegerField('area_code', validators =[Required()])
+#     number       = StringField('number')
 
 class RegistrationForm(Form):
 	first_name = TextField('first_name', validators=[Required()])
 	last_name = TextField('last_name', validators=[Required()])
-	phone = FormField(TelephoneForm) 
-	address = TextField('address', validators=[Required()])
+	phone = TextField('phone', validators=[Required()])
+	city = TextField('city', validators=[Required()])
+	state = TextField('state', validators=[Required()])
+	# address = TextField('address', validators=[Required()])
 	email = TextField('email', validators=[Required()])
 	password = PasswordField('password', validators=[Required()])
 	# I would like to do another password field here to make sure that the user inputs the right password
