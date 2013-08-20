@@ -41,38 +41,48 @@ def before_request():
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/index", methods=['GET', 'POST'])
 def index():
+	# if g.user:
+	# 	return render_template("hack_home_test.html")
+	# else:
 	form = LoginForm()
-	if form.validate_on_submit():
+	if session['user_id']:
+		user = model.session.query(model.User).filter(model.User.id==session['user_id']).first()
+	
+	elif form.validate_on_submit():
 		email = form.email.data
 		password = form.password.data
 
 		user = model.session.query(model.User).filter(model.User.email==email).filter(model.User.password==password).first()
 
-		if user:
-			arduino = model.session.query(model.Arduino).filter(model.Arduino.user_id==user.id).first()
-			events = events = model.session.query(model.Event).order_by(desc(model.Event.id)).filter(model.Event.arduino_key==arduino.key).limit(10).all()
-			session['user_id'] = user.id
+	# elif not form.validate_on_submit():
+	# 	flash('Sorry! This email and password combination does not exist')
+	# 	return render_template("hack_index.html", form=form)
+	else:
+		# flash('Sorry! This email and password combination does not exist')
+		return render_template("hack_index.html", form=form)
+		# return render_template("hack_index.html", form=form)
+	
+	if user:
+		arduino = model.session.query(model.Arduino).filter(model.Arduino.user_id==user.id).first()
+		events = model.session.query(model.Event).order_by(desc(model.Event.id)).filter(model.Event.arduino_key==arduino.key).limit(10).all()
+		session['user_id'] = user.id
 
-			#Now on to the graph data
-			user_arduino_key = model.session.query(model.Arduino).filter(model.Arduino.user_id==user.id).first().key
-			all_graph_readings = model.session.query(model.Power).filter(model.Arduino.key==user_arduino_key).all() #for now
+		#Now on to the graph data
+		user_arduino_key = model.session.query(model.Arduino).filter(model.Arduino.user_id==user.id).first().key
+		all_graph_readings = model.session.query(model.Power).filter(model.Arduino.key==user_arduino_key).all() #for now
 
-			graph_readings = []
-			for graph_reading in all_graph_readings:
-				graph_reading_secs = (graph_reading.timestamp - datetime(1970,1,1)).total_seconds()
+		graph_readings = []
+		for graph_reading in all_graph_readings:
+			graph_reading_secs = (graph_reading.timestamp - datetime(1970,1,1)).total_seconds()
 
-				each_reading_info = {"x": graph_reading_secs, "y": graph_reading.reading}
-				graph_readings.append(each_reading_info)
+			each_reading_info = {"x": graph_reading_secs, "y": graph_reading.reading}
+			graph_readings.append(each_reading_info)
 
 
-			json_graph_readings = json.dumps(graph_readings)
-			return render_template("hack_home_test.html", user=user, events=events, data=json_graph_readings)
-			# return redirect("/home")
-		else:
-			flash('Sorry! This email and password combination does not exist')
-			return render_template("hack_index.html", form=form)
-
-	return render_template("hack_index.html", form=form)
+		json_graph_readings = json.dumps(graph_readings)
+		return render_template("hack_home_test.html", user=user, events=events, data=json_graph_readings)
+		# return redirect("/home")
+	# return render_template("hack_index.html", form=form)
 
 # @app.route("/home", methods=['GET', 'POST'])
 # def index():
@@ -138,11 +148,11 @@ def logout():
 def add_event():
 	#Validate arduino
 	arduino = model.session.query(model.Arduino).filter(model.Arduino.key==request.form["key"]).first()
-	if arduino_key:
+	if arduino:
 
 		event = model.Event()
 
-		event.arduino_key = arduino_key.key
+		event.arduino_key = arduino.key
 		event.event = request.form["event"]
 		event.timestamp = datetime.now()
 
@@ -157,11 +167,11 @@ def add_event():
 
 		#Code to send text message using Twilio API
 		if event.event == 1:
-			account_sid = "XXXXXX"
-			auth_token = "XXXXXX"
+			account_sid = "AC43217aee93d8775227e4a486a6e6e48f"
+			auth_token = "b0a9c94add75d7bdd95316056c945585"
 
 			#get users phone number:
-			user_phone = mode.session.query(model.User).filter(model.User.id==arduino.user_id).first().phone 
+			user_phone = model.session.query(model.User).filter(model.User.id==arduino.user_id).first().phone 
 
 			client = TwilioRestClient(account_sid, auth_token)
 

@@ -1,10 +1,13 @@
-{% extends "hack_base.html" %}
+{% extends "hack_base_test.html" %}
 
 {% block title %} {{user.first_name}} {{user.last_name}} {% endblock %}
 
+{% block head %}
+	<a href="/logout" class="pull-right"><button type="submit" class="btn inline pull-right">Log Out</button></a>
+{% endblock %}
 {% block header %} 
-<h2>Welcome to UpNEPA! {{user.first_name}} {{user.last_name}}!</h2>
-<a href="/logout">Logout</a>
+<h2>Welcome to UpNEPA! {{user.first_name}}</h2>
+<!-- <a href="/logout">Logout</a> -->
 {% endblock %}
 
 {% block content %}
@@ -24,7 +27,7 @@
 		</ul>
 		<div id="my-tab-content" class="tab-content">
 			<div class="tab-pane active" id="recent">
-				<table class="my_tab_contents">
+				<table class="my_tab_contents table table-striped table-condensed">
 					{% for event in events %}
 						{% if event.event == 1 %}
 						<tr>
