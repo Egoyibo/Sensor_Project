@@ -45,7 +45,7 @@ def index():
 	# 	return render_template("hack_home_test.html")
 	# else:
 	form = LoginForm()
-	if session['user_id']:
+	if 'user_id' in session and session['user_id']:
 		user = model.session.query(model.User).filter(model.User.id==session['user_id']).first()
 	
 	elif form.validate_on_submit():
@@ -167,8 +167,9 @@ def add_event():
 
 		#Code to send text message using Twilio API
 		if event.event == 1:
-			account_sid = "AC43217aee93d8775227e4a486a6e6e48f"
-			auth_token = "b0a9c94add75d7bdd95316056c945585"
+			# Need to remember to replace actual sid and token before I commit!!
+			account_sid = "XXXXXXX"
+			auth_token = "XXXXXXX"
 
 			#get users phone number:
 			user_phone = model.session.query(model.User).filter(model.User.id==arduino.user_id).first().phone 
